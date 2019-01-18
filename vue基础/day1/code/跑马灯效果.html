@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="./lib/vue.js"></script>
+    <style>
+        #txt{
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+<div id="app">
+    <p id="txt">{{msg}}</p>
+    <input type="button" value="start" @click = 'start'>
+    <input type="button" value="end" @click = 'end'>
+</div>
+<script>
+    var app = new Vue({
+        el:'#app',
+        data:{
+            msg:'Welcome to the world of VUE! ',
+            timeoutId:null
+        },
+        methods:{
+            start:function(){
+               if(!this.timeoutId){
+                   this.timeoutId=setInterval(() =>{
+                       this.msg=this.msg.substr(1)+this.msg.slice(0,1);
+                   },300)
+               }
+
+            },
+            end:function () {
+                clearInterval(this.timeoutId);
+                this.timeoutId=null;
+            }
+        }
+    })
+</script>
+</body>
+</html>

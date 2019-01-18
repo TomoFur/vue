@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <input type="text" id="inp">
+    <span id="b"></span>
+<script>
+    var obj ={};
+    Object.defineProperty(obj,'name',{
+        set:function (newVal) {
+            document.getElementById('inp').value=newVal;
+            document.getElementById('b').innerText=newVal;
+        }
+    })
+
+    document.getElementById('inp').onkeyup=function (e) {
+        obj.name=e.target.value;
+    }
+</script>
+</body>
+</html>

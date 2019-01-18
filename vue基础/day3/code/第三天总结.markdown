@@ -1,0 +1,102 @@
+# vue基础第三天总结
+
+## 使用vue-resource发送AJAX请求
+
+```javascript
+1.导入vue-resource.js文件
+<script src='./lib/vue-resource.js'></script>
+注意：这个文件是依赖于vue.js这个文件的，所有再导入这个文件之前需要先导入vue.js这个文件。
+2.在导入这个文件之后，新new出来的vue实例对象身上就多出来了一个$http属性，这个属性是一个对象，对象中就有发送AJAX的相关API
+```
+
+### 使用vue-resourc发送get请求
+
+```javascript
+var app = new Vue({
+    el:'#app',
+    data:{},
+    methods:{
+        getInfo(args){
+            //这个args是服务器要求的要在url后面通过':args'方式传入的参数
+            this.$http.get('url地址'+args).then(res=>{
+                if(res.body.status===0){
+                    console.log(res.body.message);
+                    //接收回来的数据是一个json格式的，存放在res。body里面。格式如下：
+                  /*
+                  	{
+						status:0||1,//status用来判断发送请求是否成功获取到了数据
+                     	  message:,//获取到的数据就在这里。
+                  	}	                  
+                  */
+                }
+            })
+        }
+    }
+});
+```
+
+### 使用vue-resourc发送post请求
+
+```javascript
+var app = new Vue({
+    el:'#app',
+    data:{},
+    methods:{
+        //post请求是可以向服务器发送数据的，数据在post()方法的第二位，第三位是为了设置表单提交数据的格式。
+        getInfoByPost(){
+            this.$http.post('url地址'+args,{要传递的数据},{emulateJSON:true}).then(res=>{
+                 if(res.body.status===0){
+                    console.log(res.body.message);
+                    //接收回来的数据是一个json格式的，存放在res。body里面。格式如下：
+                  /*
+                  	{
+						status:0||1,//status用来判断发送请求是否成功获取到了数据
+                     	  message:,//获取到的数据就在这里。
+                  	}	                  
+                  */
+                }
+            })
+        }
+    }
+});
+```
+
+### 使用vue-resourc发送JSONP请求
+
+JSONP是一种非正式的数据交互协议，是为了解决浏览器跨域访问问题而提出的，因为srcipt标签的src属性中的url地址不存在跨域问题，所以，一般发送JSONP请求的步骤是：
+
++ 在前端html里面预先定义好要调用的回调函数callback();
++ 使用script的src属性，向后台url地址发送请求是，将这个回调函数的函数名callback作为参数传入。
++ 后台得到这个回调函数名字之后，拼接出调用这个回调函数的JavaScript字符串，这样浏览器在解析是会将服务器返回的字符串当成js代码来执行，这样，就会执行预先定义好的callback函数
+
+```html
+前端页面代码：
+<script>
+    function callbackName(data){
+        console.log(data);
+    }
+</script>
+
+<script src='url?callback=callbackName'></script>
+```
+
+```javascript
+后台代码：
+var http = require('http');
+var url = require('url');
+
+var server = http.createServer();
+server.on('request',function(request,response){
+    const {pathName,query}=url.parse(request.url,true);
+    var str = '';//这里的str只能是json格式的字符串。
+    if(pathName==='前端的url'){
+        //这样就是拼接了一个'callback(str)'形式的字符串，并发送个了前台。
+        server.end(`${query.callback}(${str})`);
+    }
+});
+
+server.on('监听地址及端口号',function(){
+    consoel.log('服务器已开启，正在监听中....')
+})
+```
+

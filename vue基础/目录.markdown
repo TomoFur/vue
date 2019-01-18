@@ -1,0 +1,57 @@
+#vue基础知识点列表
+
+## day1
+
++ 一个vue实例的基本结构框架
++ v-model实现数据双向绑定
++ v-bind绑定属性
++ v-on绑定事件
++ vue事件修饰符
++ v-for循环
++ v-if/v-show控制元素显示与隐藏
++ mustache{{}}语法插值表达式，v-text和v-html
+
+## day2
+
++ vue过滤器----->`Vue.fliter`
++ vue自定义指令---->`Vue.directive`
++ vue实例的生命周期
+
+## day3------AJAX相关
+
++ 使用vue-resource发送get请求-------->`this.$http.get(url)`
++ 使用vue-resource发送post请求------>`this.$http.post(url,data,{emulateJson:true})`
++ 使用vue-resource发送jsonp请求------>`this.$jsonp(url)`
+
+## day4-----动画相关
+
++ 使用过渡类名实现动画---------->`<transition></transition>`
++ 使用animate.css实现动画
++ 使用钩子函数实现半场动画
++ 列表动画的实现
+
+## day5-----组件相关
+
++ 创建公有组件的三种方式------->`Vue.component`
++ 创建私有组件
++ 组件间通信
+  + 父组件向子组件传值
+  + 父组件向子组件传递方法
++ 组件切换
+  + 使用v-if/v-else实现组件间切换
+  + 使用`<component :is='componentName'></component>`实现组件间切换
++ $refs来获取标签元素
+
+## day6----路由相关
+
++ 使用路由的基本方式------>`var router = new VueRouter({routes:[]})`
++ 路由传参的两种方式
+  + 查询字符串传参，借助$route.query获取传递的参数
+  + ‘url/:params’方式传参，借助$route.params获取传递的参数
++ 路由嵌套
++ 命名视图
+
+## day7
+
++ watch属性
++ computed属性

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="./lib/vue.js"></script>
+</head>
+<body>
+<div id="app">
+    <input type="text" v-model.number="x">
+    <select name="" id="" v-model="opt">
+        <option value="+">+</option>
+        <option value="-">-</option>
+        <option value="*">*</option>
+        <option value="/">/</option>
+    </select>
+    <input type="text" v-model.number="y">
+    <input type="button" value="=" @click="cac">
+    <input type="text" v-model.number="rest">
+</div>
+<script>
+    var app = new Vue({
+        el:'#app',
+        data:{
+            x:0,
+            y:0,
+            opt:'+',
+            rest:0
+        },
+        methods:{
+            cac:function(){
+                switch (this.opt) {
+                    case '+': {
+                        this.rest = this.x + this.y;
+                        break;
+                    }
+                    case '-': {
+                        this.rest = this.x - this.y;
+                        break;
+                    }
+                    case '*': {
+                        this.rest = this.x * this.y;
+                        break;
+                    }
+                    case '/': {
+                        this.rest = this.x / this.y;
+                        break;
+                    }
+                }
+            }
+        }
+    })
+</script>
+</body>
+</html>

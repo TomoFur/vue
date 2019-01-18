@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>myCode</title>
+    <script src="./lib/vue.js"></script>
+</head>
+<body>
+<div id='app'>
+    <h1 ref="myh1">这是组件里的h1标签</h1>
+    <tmp ref="mytmp"></tmp>
+    <input type="button" value="click" @click="click">
+</div>
+<template id="tmp">
+    <div>
+        <h1>这是子组件里的h1</h1>
+    </div>
+</template>
+<script>
+    var tmp ={
+        template:'#tmp',
+        data:function () {
+            return {
+                msg:'这是自组件的私有数据'
+            }
+        },
+        methods:{
+            show(){
+                console.log(this.msg);
+            }
+        }
+    }
+    var app = new Vue({
+        el: '#app',
+        data: {},
+        methods: {
+            click(){
+                // console.log(.msg);
+                this.$refs.mytmp.show();
+            }
+        },
+        components:{
+            tmp
+        }
+    });
+</script>
+
+</body>
+</html>

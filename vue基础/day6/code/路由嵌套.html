@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="./lib/vue.js"></script>
+    <script src="./lib/vue-router.js"></script>
+    <style>
+        .v-enter,.v-leave-to{
+            opacity:0;
+            transform: translateX(150px);
+        }
+        .v-enter-active,.v-leave-active{
+            transition: all 1s ease;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <router-link to="/account">account</router-link>
+        <transition>
+            <router-view></router-view>
+        </transition>
+    </div>
+    <!--account组件-->
+    <template id="account">
+        <div>
+            <h1>account页面</h1>
+            <router-link to="/account/login">登录</router-link>
+            <router-link to="/account/register">注册</router-link>
+           <transition mode="out-in">
+               <router-view></router-view>
+           </transition>
+        </div>
+    </template>
+    <!--login组件-->
+    <template id="login">
+        <div>
+            <h2>login页面</h2>
+        </div>
+    </template>
+    <!--register组件-->
+    <template id="register">
+        <div>
+            <h2>register页面</h2>
+        </div>
+    </template>
+<script>
+    var account = {
+        template:'#account'
+    };
+    var login = {
+        template:'#login'
+    };
+    var register = {
+        template:'#register'
+    };
+    // 定义一个路由对象
+    var router = new VueRouter({
+        routes:[
+            {
+                path:'/account',
+                component:account,
+                children:[
+                    {path:'login',component:login},
+                    {path:'register',component:register}
+                ]
+            }
+        ]
+    });
+
+    var app = new Vue({
+        el:'#app',
+        data:{},
+        // 挂载路由
+        router:router
+    })
+</script>
+</body>
+</html>

@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="./lib/vue.js"></script>
+    <link rel="stylesheet" href="./lib/bootstrap-3.3.7.css">
+</head>
+<body>
+    <div id="app">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h4>品牌管理</h4>
+            </div>
+        	<div class="panel-body form-inline">
+                <label>
+                    ID:
+                    <input type="text" class="form-control" v-model="id">
+                </label>
+                <label>
+                    name:
+                    <input type="text" class="form-control" v-model="name" @keyup.enter="add">
+                </label>
+                <button class="btn btn-primary" @click="add">添加</button>
+                <label>
+                    搜索关键字:
+                    <input type="text" class="form-control" @blur="search" v-focus v-model ='keywords'>
+                </label>
+        	</div>
+        </div>
+        <table class="table table-hover table-bordered table-striped">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>addTime</th>
+                <th>操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr v-for = "item in search()" :key = 'item.id'>
+                <td>{{  item.id }}</td>
+                <td>{{  item.name }}</td>
+                <td>{{  item.time |dataFormat }}</td>
+                <td><a href="#" @click.prevent="del(item.id)">删除</a></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+<script>
+    //自定义指令，让搜索框一进来就自动获取焦点
+    Vue.directive('focus',{
+        inserted:function (el) {
+            el.focus();
+        }
+    });
+    //定义过滤器来规定时间的格式
+    Vue.filter('dataFormat',function (str) {
+        var dt = new Date(str);
+        var y = dt.getFullYear();
+        var M = dt.getMonth()+1;
+        var d = dt.getDate();
+        var h = dt.getHours();
+        var m = dt.getMinutes();
+        var s = dt.getSeconds();
+        return `${y}-${M}-${d}/${h}:${m}:${s}`;
+    });
+
+    var app = new Vue({
+        el:'#app',
+        data:{
+            list:[
+                {
+                    id:1,
+                    name:'奔驰',
+                    time:new Date()
+                },
+                {
+                    id:2,
+                    name:'宝马',
+                    time:new Date()
+                },
+            ],
+            name:'',
+            id:'',
+            keywords:'',
+        },
+        methods:{
+            add:function(){
+                this.list.push({id:this.id,name:this.name,time:new Date()});
+                this.id='';
+                this.name='';
+            },
+            del:function (id) {
+                var index = this.list.findIndex(function (item) {
+                    return item.id===id;
+                });
+                this.list.splice(index,1);
+            },
+            search:function () {
+                var searchArr=[];
+                this.list.forEach((item)=> {
+                    if(item.name.indexOf(this.keywords)!= -1){
+                       searchArr.push(item);
+                    }
+                });
+                return searchArr;
+            }
+        }
+    });
+</script>
+</body>
+</html>

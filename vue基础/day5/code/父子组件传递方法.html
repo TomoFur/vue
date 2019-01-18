@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>myCode</title>
+    <script src="./lib/vue.js"></script>
+</head>
+<body>
+<div id='app'>
+    <h1>{{msg}}</h1>
+    <h1>这是子组件传递给父组件的参数----{{this.sonData}}</h1>
+    <my-com @func="change"></my-com>
+</div>
+<template id="tmp">
+    <div>
+        <input type="button" value="click" @click="click">
+    </div>
+</template>
+<script>
+    var app = new Vue({
+        el: '#app',
+        data: {
+            msg:'这是父组件的msg',
+            sonData:''
+        },
+        methods: {
+            change:function (data) {
+                this.sonData=data;
+            }
+        },
+        components:{
+            myCom:{
+                template:'#tmp',
+                methods:{
+                    click:function () {
+                        this.$emit('func','hello,Father');
+                    }
+                }
+            }
+        }
+    });
+</script>
+
+</body>
+</html>

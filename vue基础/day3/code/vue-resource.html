@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="./lib/vue.js"></script>
+    <script src="./lib/vue-resource.min.js"></script>
+    <style>
+        ul li{
+            list-style: none;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <input type="button" value="get" @click="getInfo">
+        <input type="button" value="post" @click="postInfo">
+        <ul>
+            <li v-for="item in imgArr" :key="item.id">
+                <p>{{item.title}}</p>
+                <img :src="item.img_url" >
+                <p>{{ item.zhaiyao}}</p>
+
+            </li>
+        </ul>
+    </div>
+<script>
+    var app = new Vue({
+        el:'#app',
+        data:{
+            imgArr:[]
+        },
+        methods:{
+            getInfo(){
+                this.$http.get('http://www.liulongbin.top:3005/api/getnewslist').then(res=>{
+                    if(res.body.status===0){
+                        this.imgArr=res.body.message;
+                    }else{
+                        console.log('获取失败')
+                    }
+                });
+            },
+            postInfo(){
+                this.$http.post('http://www.liulongbin.top:3005/api/post',{},{emulateJSON:true}).then(res=>{
+                    console.log(res.body);
+                })
+            }
+        }
+    })
+</script>
+</body>
+</html>

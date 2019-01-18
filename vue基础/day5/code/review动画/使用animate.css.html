@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="./lib/vue.js"></script>
+    <link rel="stylesheet" href="./lib/animate.css">
+</head>
+<body>
+    <div id="app">
+        <input type="button" value="toggle" @click="toggle">
+        <transition
+                enter-active-class="animated tada"
+                leave-active-class="animated bounceOutRight"
+                :duration="{enter:200,leave:400}"
+        >
+            <h1 v-if="flag">这是一个h1标签</h1>
+        </transition>
+    </div>
+
+<script>
+    var app = new Vue({
+        el:'#app',
+        data:{
+            flag:true
+        },
+        methods:{
+            toggle:function () {
+                this.flag = !this.flag;
+            }
+        }
+    })
+</script>
+</body>
+</html>

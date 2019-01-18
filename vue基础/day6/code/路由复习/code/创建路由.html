@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <!--引入相关文件-->
+    <script src="./lib/vue.js"></script>
+    <script src="./lib/vue-router.js"></script>
+    <style>
+        .myActive{
+            color:skyblue;
+            background-color: pink;
+            font-size:20px;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <router-link to="/login">login</router-link>
+        <router-view></router-view>
+    </div>
+
+    <template id="login">
+        <div>
+            <h1>这是login组件</h1>
+        </div>
+    </template>
+<script>
+    var login = {
+        template:"#login"
+    }
+
+    var router = new VueRouter({
+        routes:[
+            {path:'/login', component:login}
+        ],
+        linkActiveClass:"myActive"
+    })
+    var app = new Vue({
+        el:'#app',
+        data:{},
+        router:router
+    })
+</script>
+</body>
+</html>

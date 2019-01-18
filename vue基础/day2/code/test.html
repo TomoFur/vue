@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="./lib/vue-2.4.0.js"></script>
+</head>
+<body>
+    <div id="app">
+        <input type="button" value="修改msg" @click="change">
+        <p id="msg">{{ msg }}</p>
+    </div>
+<script>
+    var app = new Vue({
+        el:'#app',
+        data:{
+            msg:'ok'
+        },
+        methods:{
+            // beforeUpdate(){
+            //     console.log('data中的msg是:'+this.msg);
+            //     console.log('界面中的内容是:'+document.getElementById('msg').innerText);
+            // },
+
+            change:function () {
+               this.msg='no';
+            }
+
+        },
+        beforeUpdate() { // 这时候，表示 我们的界面还没有被更新【数据被更新了吗？  数据肯定被更新了】
+            console.log('界面上元素的内容：' + document.getElementById('msg').innerText)
+            console.log('data 中的 msg 数据是：' + this.msg)
+            // 得出结论： 当执行 beforeUpdate 的时候，页面中的显示的数据，还是旧的，此时 data 数据是最新的，页面尚未和 最新的数据保持同步
+        },
+    })
+</script>
+
+</body>
+</html>

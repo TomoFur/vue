@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="./lib/vue.js"></script>
+    <style>
+        [v-cloak]{
+            display: none;
+        }
+    </style>
+</head>
+<body>
+<div id="app">
+    <p v-cloak>{{msg}}</p>
+    <!--<h4 v-text="msg"></h4>-->
+    <p v-html="tmp"></p>
+    <!--默认v-text是没有闪烁问题的-->
+    <!--v-text会将标签里原有的内容全部覆盖，而插值表达式只会替换自己的占位符那一块，不会清空元素的整个内容-->
+    <p v-text="tmp"></p>
+</div>
+<script>
+    var app = new Vue({
+        el:'#app',
+        data:{
+            msg:'123',
+            tmp:`<h4>hello,vue</h4>`
+        }
+    })
+
+</script>
+
+</body>
+</html>

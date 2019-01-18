@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>myCode</title>
+    <script src="../lib/vue.js"></script>
+</head>
+<body>
+<div id='app'>
+    <son :parent="msg"></son>
+</div>
+<template id="son">
+    <div>
+        <h1>{{msg}}</h1>
+        <h2>父组件传递的数据是:{{parent}}</h2>
+    </div>
+</template>
+<script>
+    var tmp = {
+        template:'#son',
+        data:function () {
+            return {
+                msg:'子组件的数据'
+            }
+        },
+        props:['parent']
+    }
+    Vue.component('son',tmp);
+    var app = new Vue({
+        el: '#app',
+        data: {
+            msg:'父组件要传递的数据'
+        },
+        methods: {}
+    });
+</script>
+
+</body>
+</html>
